@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import AppHeader from '../Components/UI/Header';
 import AppFooter from '../Components/UI/Footer';
+import { LoginForm } from '../Containers/Login/LoginForm';
 
 
 export const AppRoute = {
@@ -21,7 +22,7 @@ export class AppRoutingModule extends React.Component<Props, {}> {
                 <AppHeader />
                 <div className='container-body'>
                     <Switch>
-                        <Route path={AppRoute.Login} exact component={AppHeader} />
+                        <Route path={AppRoute.Login} exact component={LoginForm} />
                         <Redirect to={AppRoute.Login} />
                     </Switch>
                 </div>
