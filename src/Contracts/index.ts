@@ -1,19 +1,32 @@
 
+export class AppHttpHeadersOptions {
+    method: string;
+    baseURL: string | undefined;
+    url: string;
+    headers?: any;
+    data?: any;
+    constructor(method: string, baseUrl: string | undefined, url: string) {
+        this.method = method;
+        this.baseURL = baseUrl;
+        this.url = url;
+    }
+}
+
 export const SetInnerHtml = (htmlString: string) => {
     return {
         __html: htmlString
     };
 };
 
-export interface AuthWindow extends Window {
+export interface AppWindow extends Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
     dataLayer: Array<any>;
     _LTracker: any;
 }
 
-export const AuthStorageKeys = {
-    AuthEmail: 'auth-email',
-    AuthToken: 'auth-token'
+export const AppStorageKeys = {
+    AppEmail: 'app-email',
+    AppToken: 'app-token'
 };
 
 interface SessionStorage extends Storage {
@@ -42,7 +55,7 @@ class SessionStorage implements SessionStorage {
     }
 }
 
-export const AuthSessionStorage: SessionStorage = new SessionStorage();
+export const AppSessionStorage: SessionStorage = new SessionStorage();
 
 interface LocalStorage extends Storage {
     get: (key: string, parseJson: boolean) => any;
@@ -71,4 +84,4 @@ class LocalStorage implements LocalStorage {
 
 }
 
-export const AuthLocalStorage: LocalStorage = new LocalStorage();
+export const AppLocalStorage: LocalStorage = new LocalStorage();
