@@ -85,3 +85,14 @@ class LocalStorage implements LocalStorage {
 }
 
 export const AppLocalStorage: LocalStorage = new LocalStorage();
+
+export const toastSettings = () => ({
+    position: 'bottom-left',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+});
+
+export const redirectionCounter = () => (10);
