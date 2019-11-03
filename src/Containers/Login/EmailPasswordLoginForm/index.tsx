@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Avatar, CssBaseline, Paper, Typography, withStyles } from '@material-ui/core';
-import LockIcon from '@material-ui/icons/LockOutlined';
-
-
-
+import { Avatar, CssBaseline, Typography, withStyles, Grid, Container, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ProcessButton from '../../../Components/UI/Button';
 
 import { LoginStyle } from './LoginFormStyles';
@@ -33,16 +30,16 @@ const EmailPasswordLoginForm = (props: Props) => {
 
     const { classes } = props;
     return (
-        <main className={classes.main}>
+        <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <Paper className={classes.paper}>
+            <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockIcon />
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
-                </Typography>
-                <form className={classes.form}>
+            </Typography>
+                <form className={classes.form} noValidate>
                     <InputField
                         defaultInputValue={props.defaultEmail}
                         inputOnChange={($event) => props.onEmailChange($event)}
@@ -55,6 +52,10 @@ const EmailPasswordLoginForm = (props: Props) => {
                         inputId="pwd"
                         inputType="password"
                     />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Remember me"
+                    />
                     <ProcessButton
                         buttonClass={classes.submit}
                         buttonType="submit"
@@ -63,9 +64,21 @@ const EmailPasswordLoginForm = (props: Props) => {
                         isDisabled={!(props.email && props.email.length >= 5 && props.password.length >= 4)}
                         buttonOnClick={authenticate}
                     />
+                    <Grid container>
+                        <Grid item xs>
+                            <Link href="#" variant="body2">
+                                Forgot password?
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link href="#" variant="body2">
+                                {"Don't have an account? Sign Up"}
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </form>
-            </Paper>
-        </main>
+            </div>
+        </Container>
     );
 };
 
