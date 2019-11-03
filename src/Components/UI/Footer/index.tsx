@@ -8,7 +8,7 @@ const AppFooter = (props: Props) => {
     return (
         <footer>
             <p className="copyright text-center">
-                © {(new Date()).getFullYear()} Camden Town Technologies Pvt Ltd
+                © {(new Date()).getFullYear()} User Application
             </p>
         </footer>
     );
