@@ -1,10 +1,6 @@
-import { AppLocalStorage, AppStorageKeys, AppHttpHeadersOptions } from '../Contracts';
-import { UserLoginResponse } from '../Contracts/Login';
+const BASE_URL = 'http://localhost:4040';
 
-const BASE_APP_URL: string | undefined = process.env.REACT_APP_BASE_MERCHANT_URL;
-
-const setHeaders = (urlEncodedForm: boolean) => {
-    const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
+const setHeaders = (urlEncodedForm) => {
     const additionalHeaders = {};
     if (urlEncodedForm) {
         additionalHeaders['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
@@ -14,41 +10,43 @@ const setHeaders = (urlEncodedForm: boolean) => {
     }
     additionalHeaders['Cache-Control'] = 'no-cache';
     additionalHeaders['Pragma'] = 'no-cache';
-    if (token && token.token) {
-        additionalHeaders['token'] = token.token;
-    }
     return additionalHeaders;
 };
 
-export const getDataOptions = (url: string, urlEncoded = false): AppHttpHeadersOptions => {
-    const options: AppHttpHeadersOptions = new AppHttpHeadersOptions('get', BASE_APP_URL, url);
-    const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
-    options.headers = setHeaders(urlEncoded);
+const setOptions = (method, baseURL, url) => {
+    const options = {};
+    options['method'] = method;
+    options['baseURL'] = baseURL;
+    options['url'] = url;
+    return options;
+}
+
+export const getDataOptions = (url) => {
+    const options = setOptions('get', BASE_URL, url);
+    options['headers'] = setHeaders(false);
     return options;
 };
 
-
-export const postDataOptions = (url: string, data: any = null, urlEncoded = false): AppHttpHeadersOptions => {
-    const options: AppHttpHeadersOptions = new AppHttpHeadersOptions('post', BASE_APP_URL, url);
-    const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
+export const postDataOptions = (url, data = null, urlEncoded = false) => {
+    const options = setOptions('post', BASE_URL, url);
     if (data) {
-        options.data = data;
+        options['data'] = data;
     }
-    options.headers = setHeaders(urlEncoded);
+    options['headers'] = setHeaders(urlEncoded);
     return options;
 };
 
-
-export const patchDataOptions = (url: string, data: any = null, urlEncoded = false): AppHttpHeadersOptions => {
-    const options: AppHttpHeadersOptions = new AppHttpHeadersOptions('patch', BASE_APP_URL, url);
-    const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
-    if (data) {
-        options.data = data;
+export const getDataOptionsWithDefaultHeader = (url) => {
+    const options = {
+        method: 'get',
+        baseURL: BASE_URL,
+        url: url,
+        headers: {
+            Accept: 'application/json',
+            Pragma: "no-cache",
+            'Content-Type': 'application/json',
+            'Cache-Control': "no-cache"
+        }
     }
-    options.headers = setHeaders(urlEncoded);
     return options;
-};
-
-export const removeEscapeSlashes = (stringWithEscapedCharacters: string): string => {
-    return stringWithEscapedCharacters.replace(/\\"/g, '').replace(/"/g, '');
 };
