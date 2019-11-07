@@ -61,7 +61,7 @@ const EmailPasswordLoginForm = (props: Props) => {
                         buttonType="submit"
                         buttonText="Process"
                         isLoading={props.isLoading}
-                        isDisabled={!(props.email && props.email.length >= 5 && props.password.length >= 4)}
+                        // isDisabled={!(props.email && props.email.length >= 5 && props.password.length >= 4)}
                         buttonOnClick={authenticate}
                     />
                     <Grid container>

@@ -5,6 +5,8 @@ import { WrappingComponent } from '../../../Components/HigherOrderComponents/Wra
 
 import EmailPasswordLoginForm from '../EmailPasswordLoginForm';
 import { AppLocalStorage, AppStorageKeys } from '../../../Contracts';
+import { getUserToken } from '../../../Services/ApplicationService';
+import { UserLoginRequest } from '../../../Contracts/Login';
 
 export interface History {
     push: (pathName: string) => void;
@@ -28,20 +30,20 @@ export class LoginForm extends React.Component<Props, {}> {
 
     constructor(props: Props) {
         super(props);
-        
+
     }
 
     render() {
         return (
             <WrappingComponent>
                 <EmailPasswordLoginForm
-                   defaultEmail={this.props.email}
-                   email={this.props.email}
-                   password={this.props.password}
-                   onEmailChange={($event) => this.onEmailChange($event.target.value)}
-                   onPasswordChange={($event) => this.onPasswordChange($event.target.value)}
-                   isLoading={this.props.isLoading}
-                   authenticate={() => this.authenticate()}
+                    defaultEmail={this.props.email}
+                    email={this.props.email}
+                    password={this.props.password}
+                    onEmailChange={($event) => this.onEmailChange($event.target.value)}
+                    onPasswordChange={($event) => this.onPasswordChange($event.target.value)}
+                    isLoading={this.props.isLoading}
+                    authenticate={() => this.authenticate()}
                 />
             </WrappingComponent>
         );
@@ -61,8 +63,14 @@ export class LoginForm extends React.Component<Props, {}> {
     }
 
     authenticate = async () => {
-        this.props.showInlineButtonLoader();
-        this.props.loginRequested();
+        // this.props.showInlineButtonLoader();
+        // this.props.loginRequested();
+        const data: UserLoginRequest = new UserLoginRequest('dilip@gmail.com', 'kumar2');
+        await getUserToken(data).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        });
     }
 }
 
