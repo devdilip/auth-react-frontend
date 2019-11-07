@@ -3,11 +3,13 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import AppHeader from '../Components/UI/Header';
 import AppFooter from '../Components/UI/Footer';
 import { LoginForm } from '../Containers/Login/LoginForm';
+import SignUp from '../Containers/SignUp';
 
 
 export const AppRoute = {
     Login: '/login',
     Profile: '/profile',
+    Register: '/register',
     AccountNotFound: '/error/account-not-found',
     PageNotFound: '/page-not-found'
 };
@@ -23,6 +25,7 @@ export class AppRoutingModule extends React.Component<Props, {}> {
                 <div className='container-body'>
                     <Switch>
                         <Route path={AppRoute.Login} exact component={LoginForm} />
+                        <Route path={AppRoute.Register} exact component={SignUp} />
                         <Redirect to={AppRoute.Login} />
                     </Switch>
                 </div>
