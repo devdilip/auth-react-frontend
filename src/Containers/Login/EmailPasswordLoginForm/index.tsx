@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Avatar, CssBaseline, Typography, withStyles, Grid, Container, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+import { Avatar, CssBaseline, Typography, withStyles, Grid, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ProcessButton from '../../../Components/UI/Button';
-
+import { Link } from "react-router-dom";
 import { LoginStyle } from './LoginFormStyles';
 import { InputField } from '../../../Components/UI/Input';
+import { AppRoute } from '../../../Routing';
 
 export interface History {
     push: (pathName: string) => void;
@@ -52,26 +53,22 @@ const EmailPasswordLoginForm = (props: Props) => {
                         inputId="pwd"
                         inputType="password"
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
                     <ProcessButton
                         buttonClass={classes.submit}
                         buttonType="submit"
                         buttonText="Process"
                         isLoading={props.isLoading}
-                        // isDisabled={!(props.email && props.email.length >= 5 && props.password.length >= 4)}
+                        isDisabled={!(props.email  && props.password)}
                         buttonOnClick={authenticate}
                     />
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
+                            <Link to={'#'}>
+                                {"Forgot Password"}
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link to={AppRoute.Register}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

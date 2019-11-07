@@ -23,5 +23,13 @@ export const SighUpFormStyle = (theme: Theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    userRegisterStyle: {
+        ...theme.typography.button,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(1),
+        alignItems: 'center' as any,
+        textAlign: 'center' as any,
+        color: 'green'
+    }
 });
 

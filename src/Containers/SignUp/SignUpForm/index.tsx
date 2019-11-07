@@ -1,15 +1,15 @@
 import * as React from 'react';
 import ProcessButton from '../../../Components/UI/Button';
-
+import { Link } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-    Avatar, CssBaseline, Typography, withStyles,
-    Grid, Container, Link
+    Avatar, CssBaseline, Typography, withStyles, Grid, Container
 } from '@material-ui/core';
 
 
 import { InputField } from '../../../Components/UI/Input';
 import { SighUpFormStyle } from './SignUpFormStyles';
+import { AppRoute } from '../../../Routing';
 
 
 export interface Props {
@@ -25,6 +25,7 @@ export interface Props {
     onPasswordChange: ($event) => void;
     classes?: any;
     register: () => void;
+    isSuccess?: boolean;
 }
 
 const SignUpForm = (props: Props) => {
@@ -78,18 +79,21 @@ const SignUpForm = (props: Props) => {
                             />
                         </Grid>
                     </Grid>
+                    {props.isSuccess
+                        ? <div className={classes.userRegisterStyle}>{"User Registered..."}</div>
+                        : null}
                     <ProcessButton
                         buttonClass={classes.submit}
                         buttonType="submit"
                         buttonText="Sign Up"
                         isLoading={props.isLoading}
-                        // isDisabled={!(props.email && props.email.length >= 5 && props.password.length >= 4)}
+                        isDisabled={!(props.email && props.password && props.firstName && props.lastName )}
                         buttonOnClick={register}
                     />
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
+                            <Link to={AppRoute.Login}>
+                                {"Already have an account? Sign in"}
                             </Link>
                         </Grid>
                     </Grid>

@@ -7,9 +7,17 @@ export class UserLoginRequest {
     }
 }
 
-export class UserLoginResponse {
+export class AccessToken {
     token: string;
     expires_in: string;
     expirytime: string;
-    username: string;
+    userName: string;
+}
+
+export class UserLoginResponse {
+    access_token: string;
+}
+
+export class UserResponse {
+    userName: string;
 }
