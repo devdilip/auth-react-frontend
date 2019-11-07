@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import green from "@material-ui/core/colors/green";
 import Button from "@material-ui/core/Button";
-import { __rest } from 'tslib';
+// import { __rest } from 'tslib';
 import { primaryColor } from "../Styles";
 
 export interface Props {
