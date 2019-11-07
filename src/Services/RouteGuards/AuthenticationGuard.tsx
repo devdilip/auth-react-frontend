@@ -10,7 +10,7 @@ export const AuthenticationGuard = (Component) => {
         render() {
             let tokenExists = false;
             const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
-            if (token && token.token && token.token.length > 0) {
+            if (token && token.access_token && token.access_token.length > 0) {
                 tokenExists = true;
             }
             return tokenExists ? <Component {...this.props} /> : <Redirect to={AppRoute.Login} />;
