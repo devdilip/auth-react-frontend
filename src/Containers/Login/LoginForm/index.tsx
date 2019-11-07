@@ -7,17 +7,11 @@ import { WrappingComponent } from '../../../Components/HigherOrderComponents/Wra
 import EmailPasswordLoginForm from '../EmailPasswordLoginForm';
 import { AppLocalStorage, AppStorageKeys } from '../../../Contracts';
 import { getUserToken } from '../../../Services/ApplicationService';
-import { UserLoginRequest } from '../../../Contracts/Login';
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { UserLoginRequest, UserLoginResponse } from '../../../Contracts/Login';
 import { AppRoute } from '../../../Routing';
 import { LoginActionCreators } from '../../../Actions/Login';
 import { HttpStatusGuard } from '../../../Services/RouteGuards/HttpStatusGuard';
-const Fade = cssTransition({
-    enter: 'fadeIn',
-    exit: 'fadeOut',
-    duration: 400
-});
+
 
 export interface History {
     push: (pathName: string) => void;
@@ -29,7 +23,7 @@ export interface Props {
     password: string;
     isLoading: boolean;
     emailChanged: (email: string | null) => void;
-    passwordChanged: (email: string | null) => void;
+    passwordChanged: (password: string | null) => void;
     loginRequested: () => void;
     loginFulfilled: () => void;
     loginRejected: () => void;
@@ -37,11 +31,14 @@ export interface Props {
     hideInlineButtonLoader: () => void;
 }
 
-export class LoginForm extends React.Component<Props, {}> {
+class LoginForm extends React.Component<Props, { }> {
 
     constructor(props: Props) {
         super(props);
-
+        const token: UserLoginResponse = AppLocalStorage.get(AppStorageKeys.AppToken, true) as UserLoginResponse;
+        if (token && token.access_token) {
+            this.props.history.push(AppRoute.Profile);
+        }
     }
 
     render() {
@@ -55,17 +52,6 @@ export class LoginForm extends React.Component<Props, {}> {
                     onPasswordChange={($event) => this.onPasswordChange($event.target.value)}
                     isLoading={this.props.isLoading}
                     authenticate={() => this.authenticate()}
-                />
-                <ToastContainer
-                    position="top-left"
-                    autoClose={5000}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    draggable
-                    pauseOnHover
-                    transition={Fade}
                 />
             </WrappingComponent>
         );
@@ -89,7 +75,7 @@ export class LoginForm extends React.Component<Props, {}> {
             AppLocalStorage.save(AppStorageKeys.AppToken, response);
             this.props.loginFulfilled();
             this.props.hideInlineButtonLoader();
-            // this.props.history.push(AppRoute.Profile);
+            this.props.history.push(AppRoute.Profile);
         }).catch(error => {
             console.log(error);
             this.props.loginRejected();
@@ -97,12 +83,6 @@ export class LoginForm extends React.Component<Props, {}> {
             this.props.history.push(AppRoute.AccountNotFound);
         });
     }
-
-    notify = (msg: string) => {
-        toast.dismiss();
-        toast.error(msg);
-    }
-
 }
 
 const mapStateToProps = (state) => {
