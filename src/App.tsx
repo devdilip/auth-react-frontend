@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxLogger from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
+
+import './App.css';
+import WrappingComponent from './Components/HigherOrderComponents/WrappingComponent';
+import AppRoutingModule from './Routing';
+import { LoginReducer } from './Reducers/Login';
+import { AppWindow } from './Contracts';
+
+declare var window: AppWindow;
+
+const middleWare: Array<any> = [ReduxThunk];
+let composeEnhancers = compose;
+
+if (process.env.REACT_APP_NODE_ENV === 'development') {
+  middleWare.push(ReduxLogger);
+  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+  if (devToolsExtension && typeof devToolsExtension === 'function') {
+    composeEnhancers = devToolsExtension || compose;
+  }
+}
+
+const store = createStore(combineReducers({
+  login: LoginReducer,
+}), composeEnhancers(applyMiddleware(...middleWare)));
+
+
+
+class App extends React.Component {
+  render() {
+    return (
+      <WrappingComponent>
+        <Provider store={store}>
+          <BrowserRouter>
+            <AppRoutingModule />
+          </BrowserRouter>
+        </Provider>
+      </WrappingComponent >
+    );
+  }
 }
 
 export default App;
