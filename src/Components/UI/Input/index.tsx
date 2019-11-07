@@ -28,9 +28,8 @@ export interface Props {
 
 }
 
-export interface State { }
 
-class InputFieldImpl extends React.Component<Props, State> {
+class InputFieldImpl extends React.Component<Props, { }> {
     constructor(props: Props) {
         super(props);
     }
