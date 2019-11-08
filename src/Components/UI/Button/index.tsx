@@ -48,7 +48,7 @@ class ProcessButton extends React.Component<Props> {
 }
 const styles = theme => ({
     wrapper: {
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing(),
         position: "relative" as any
     },
     buttonColor: {

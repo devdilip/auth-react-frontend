@@ -3,7 +3,8 @@ import * as React from 'react';
 import '../Error.css';
 
 import { WrappingComponent } from '../../HigherOrderComponents/WrappingComponent';
-
+import { redirectionCounter, AppLocalStorage } from '../../../Contracts';
+import { AppRoute } from '../../../Routing';
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Fade = cssTransition({
@@ -12,8 +13,7 @@ const Fade = cssTransition({
     duration: 400
 });
 
-import { redirectionCounter, AppLocalStorage } from '../../../Contracts';
-import { AppRoute } from '../../../Routing';
+
 
 export interface Props {
     httpErrorCode: number | null;

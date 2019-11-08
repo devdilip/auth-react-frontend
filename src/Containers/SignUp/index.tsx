@@ -4,6 +4,8 @@ import { WrappingComponent } from '../../Components/HigherOrderComponents/Wrappi
 
 
 import SignUpForm from './SignUpForm';
+import { RegisterNewUserRequest } from '../../Contracts/SignUp';
+import { registerUser } from '../../Services/ApplicationService';
 
 export interface History {
     push: (pathName: string) => void;
@@ -55,9 +57,18 @@ export class SighUp extends React.Component<Props, {}> {
         );
     }
 
-    register = () => {
-        
+    register = async () => {
+        // this.props.showInlineButtonLoader();
+        // this.props.loginRequested();
+        console.log("SignUP Button CLicked");
+        const data: RegisterNewUserRequest = new RegisterNewUserRequest('Dilip', 'Kumar', "dk@gmail.com", "pass");
+        await registerUser(data).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        });
     }
+
     firstNameChanged = (fName: string) => {
         console.log(fName)
     }
