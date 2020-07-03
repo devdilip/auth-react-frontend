@@ -11,6 +11,7 @@ import WrappingComponent from './Components/HigherOrderComponents/WrappingCompon
 import AppRoutingModule from './Routing';
 import { LoginReducer } from './Reducers/Login';
 import { AppWindow } from './Contracts';
+import { SignUpReducer } from './Reducers/SignUp';
 
 declare var window: AppWindow;
 
@@ -27,6 +28,7 @@ if (process.env.REACT_APP_NODE_ENV === 'development') {
 
 const store = createStore(combineReducers({
   login: LoginReducer,
+  signUp: SignUpReducer
 }), composeEnhancers(applyMiddleware(...middleWare)));
 
 
